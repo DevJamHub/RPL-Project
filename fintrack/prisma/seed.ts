@@ -37,7 +37,7 @@ async function main() {
     { name: 'Lainnya (Masuk)', type: 'INCOME', icon: 'more-horizontal', color: '#6B7280' }, // Gray
   ];
 
-  const createdCategories = {};
+  const createdCategories: Record<string, any> = {};
   for (const cat of categories) {
     const createdCat = await prisma.category.create({
       data: {
@@ -84,7 +84,7 @@ async function main() {
     transactionsData.push({
       userId: user.id,
       categoryId: createdCategories[categoryName].id,
-      type: isIncome ? 'INCOME' : 'EXPENSE',
+      type: (isIncome ? 'INCOME' : 'EXPENSE') as 'INCOME' | 'EXPENSE',
       amount,
       description,
       date,

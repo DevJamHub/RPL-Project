@@ -7,6 +7,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -53,6 +55,7 @@ model Category {
   type         TransactionType
   icon         String?
   color        String?
+  budgetLimit  Float?
   transactions Transaction[]
   budgets      Budget[]
   user         User            @relation(fields: [userId], references: [id], onDelete: Cascade)

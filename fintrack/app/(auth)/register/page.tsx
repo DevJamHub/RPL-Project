@@ -5,22 +5,45 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 
-export default function LoginPage() {
+export default function RegisterPage() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      alert('Password dan konfirmasi password tidak cocok!');
+      return;
+    }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      alert('Fitur login akan segera diaktifkan!');
+      alert('Fitur register akan segera diaktifkan!');
     }, 1000);
   };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          Nama Lengkap
+        </label>
+        <div className="mt-1">
+          <Input
+            id="name"
+            name="name"
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Masukkan nama lengkap"
+          />
+        </div>
+      </div>
+
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
           Email
@@ -34,7 +57,7 @@ export default function LoginPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="demo@fintrack.com"
+            placeholder="contoh@email.com"
           />
         </div>
       </div>
@@ -48,25 +71,41 @@ export default function LoginPage() {
             id="password"
             name="password"
             type="password"
-            autoComplete="current-password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Masukkan password"
+            placeholder="Minimal 6 karakter"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+          Konfirmasi Password
+        </label>
+        <div className="mt-1">
+          <Input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Ulangi password"
           />
         </div>
       </div>
 
       <div>
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? 'Memproses...' : 'Masuk'}
+          {loading ? 'Memproses...' : 'Daftar'}
         </Button>
       </div>
 
       <div className="text-sm text-center">
-        <span className="text-gray-500">Belum punya akun? </span>
-        <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-          Daftar Sekarang
+        <span className="text-gray-500">Sudah punya akun? </span>
+        <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+          Masuk
         </Link>
       </div>
     </form>
